@@ -25,11 +25,11 @@
         <h1 className="text-2xl font-bold text-blue-600 mb-6">我的寵物</h1>                                                                                
         <div className="grid gap-4">                                                                                                                       
           {pets.map((pet) => (                                                                                                                             
-            <div key={pet.id} className="bg-white rounded-lg shadow p-4">                                                                                  
+            <a href={`/pets/${pet.id}`} key={pet.id} className="bg-white rounded-lg shadow p-4 block hover:shadow-md transition">                                                                                  
               <h2 className="text-xl font-semibold">{pet.name}</h2>                                                                                        
               <p className="text-gray-500">{pet.species} · {pet.breed}</p>
               <p className="text-sm text-gray-400 mt-2">QR: {pet.qrCode}</p>                                                                               
-            </div>                                                                                                                                         
+            </a>                                                                                                                                         
           ))}                                                                                                                                              
         </div>                                                                                                                                             
       </main>     
