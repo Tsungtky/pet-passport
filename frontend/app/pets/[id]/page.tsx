@@ -2,6 +2,7 @@
                   
   import { useEffect, useState } from "react";
   import { use } from "react";
+  import { QRCodeSVG } from "qrcode.react";
                                                                                                                                                            
   type Pet = {
     id: number;                                                                                                                                            
@@ -65,7 +66,12 @@
               </div>                                                                                                                                       
             ))                                                                                                                                             
           )}                                                                                                                                               
-        </div>    
+        </div> 
+        <div className="bg-white rounded-lg shadow p-4 mb-6">
+            <h2 className="font-semibold mb-4">寵物QR Code</h2>                                                                                                    
+            <QRCodeSVG value={pet.qrCode} size={200} />                                                                                                            
+            <p className="text-xs text-gray-400 mt-2">{pet.qrCode}</p>
+        </div>                 
       </main>
     );
   }
