@@ -64,7 +64,16 @@
           </div>                                                                                                                                           
                                                                                                                                                            
           <div style={{ backgroundColor: "#ffffff", boxShadow: "0 2px 8px rgba(0,0,0,0.06)" }} className="rounded-2xl p-6 mb-4">                           
-            <h2 style={{ color: "#1e3a2f" }} className="font-semibold mb-3">疫苗紀錄</h2>                                                                
+            <div className="flex justify-between items-center mb-3">                                                                                                 
+                <h2 style={{ color: "#1e3a2f" }} className="font-semibold">疫苗紀錄</h2>                                                                               
+                <a                                                                                                                                                     
+                href={`/pets/${id}/vaccines`}                                                                                                                        
+                style={{ backgroundColor: "#2d5a3d", color: "#e8f5e9" }}                                                                                             
+                className="rounded-lg px-3 py-1 text-sm hover:opacity-90 transition"                                                                                 
+                >
+                + 新增                                                                                                                                               
+                </a>                                                                                                                                                 
+            </div>                                                                              
             {vaccines.length === 0 ? (                                                                                                                     
               <p style={{ color: "#a8d5b5" }}>尚無紀錄</p>                                                                                               
             ) : (                                                                                                                                          
