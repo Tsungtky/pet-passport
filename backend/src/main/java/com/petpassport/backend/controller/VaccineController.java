@@ -27,4 +27,10 @@ public class VaccineController {
     public void deleteVaccine(@PathVariable Long id) {
         vaccineRepository.deleteById(id);
     }
+
+    @PutMapping("/{id}")
+    public Vaccine updateVaccine(@PathVariable Long id, @RequestBody Vaccine updated) {
+        updated.setId(id);
+        return vaccineRepository.save(updated);
+    }
 }

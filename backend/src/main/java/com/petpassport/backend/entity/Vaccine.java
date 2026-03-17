@@ -23,5 +23,6 @@ public class Vaccine {
     private LocalDate vaccinatedDate;
     private LocalDate nextDueDate;
     private String clinicName;
+    private String doseNumber;
     private String notes;
 }

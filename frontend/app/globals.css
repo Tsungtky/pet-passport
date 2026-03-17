@@ -24,3 +24,69 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+input::-webkit-calendar-picker-indicator {
+  display: none !important;
+}
+
+/* ── Responsive utilities ── */
+
+/* Page-level padding */
+.resp-main {
+  padding: 2rem;
+}
+
+/* Header row: title + button group */
+.resp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Button group inside header */
+.resp-btn-group {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Two-column info grid */
+.resp-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+
+/* Three-column feature card grid */
+.resp-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Subtitle row (age + gender + breed) */
+.resp-subtitle {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 560px) {
+  .resp-main {
+    padding: 1.25rem 1rem;
+  }
+
+  .resp-header {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+  }
+
+  .resp-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}

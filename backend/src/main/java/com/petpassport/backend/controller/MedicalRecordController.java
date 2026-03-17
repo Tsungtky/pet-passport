@@ -27,4 +27,11 @@ public class MedicalRecordController {
     public void deleteRecord(@PathVariable Long id) {
         medicalRecordRepository.deleteById(id);
     }
+
+
+    @PutMapping("/{id}")
+    public MedicalRecord updateRecord(@PathVariable Long id, @RequestBody MedicalRecord updated) {
+        updated.setId(id);
+        return medicalRecordRepository.save(updated);
+    }
 }
