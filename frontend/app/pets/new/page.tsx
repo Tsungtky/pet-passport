@@ -115,7 +115,7 @@ export default function NewPetPage() {
     }
     setNameError(false);
     const userId = localStorage.getItem("userId");
-    await fetch("http://localhost:8080/api/pets", {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pets`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

@@ -16,7 +16,7 @@ export default function NewMedicalRecordPage({ params }: { params: Promise<{ id:
   const [notes, setNotes] = useState("");
 
   const handleSubmit = async () => {
-    await fetch("http://localhost:8080/api/medical-records", {
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/medical-records`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

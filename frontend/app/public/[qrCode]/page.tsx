@@ -46,7 +46,7 @@ export default function PublicPetPage({ params }: { params: Promise<{ qrCode: st
   const [notFound, setNotFound] = useState(false);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/pets/qr/${qrCode}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pets/qr/${qrCode}`)
       .then((res) => {
         if (!res.ok) { setNotFound(true); return null; }
         return res.json();
@@ -54,8 +54,8 @@ export default function PublicPetPage({ params }: { params: Promise<{ qrCode: st
       .then((data) => {
         if (!data) return;
         setPet(data);
-        fetch(`http://localhost:8080/api/vaccines/pet/${data.id}`).then((r) => r.json()).then(setVaccines);
-        fetch(`http://localhost:8080/api/medical-records/pet/${data.id}`).then((r) => r.json()).then(setRecords);
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vaccines/pet/${data.id}`).then((r) => r.json()).then(setVaccines);
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/medical-records/pet/${data.id}`).then((r) => r.json()).then(setRecords);
       });
   }, [qrCode]);
 

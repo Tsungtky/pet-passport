@@ -111,9 +111,9 @@ export default function PetDetailPage({ params }: { params: Promise<{ id: string
   const imgRef = useState<HTMLImageElement | null>(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/pets/${id}`).then((res) => res.json()).then((data) => setPet(data));
-    fetch(`http://localhost:8080/api/vaccines/pet/${id}`).then((res) => res.json()).then((data) => setVaccines(data));
-    fetch(`http://localhost:8080/api/medical-records/pet/${id}`).then((res) => res.json()).then((data) => setMedicalRecords(data));
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pets/${id}`).then((res) => res.json()).then((data) => setPet(data));
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vaccines/pet/${id}`).then((res) => res.json()).then((data) => setVaccines(data));
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/medical-records/pet/${id}`).then((res) => res.json()).then((data) => setMedicalRecords(data));
   }, [id]);
 
   const knownVaccineNames = pet?.species === "貓" ? t.catVaccineNames : t.dogVaccineNames;
@@ -166,12 +166,12 @@ export default function PetDetailPage({ params }: { params: Promise<{ id: string
     };
     if (mode === "add") {
       const { id: _id, ...payloadWithoutId } = payload;
-      const res = await fetch("http://localhost:8080/api/vaccines", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payloadWithoutId) });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vaccines`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payloadWithoutId) });
       if (!res.ok) { const err = await res.text(); alert("新增失敗：" + err); return; }
       const created = await res.json();
       setVaccines((prev) => [...prev, created]);
     } else {
-      const res = await fetch(`http://localhost:8080/api/vaccines/${data.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vaccines/${data.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       if (!res.ok) { const err = await res.text(); alert("修改失敗：" + err); return; }
       setVaccines((prev) => prev.map((x) => x.id === data.id ? { ...payload, id: data.id } as Vaccine : x));
     }
@@ -202,11 +202,11 @@ export default function PetDetailPage({ params }: { params: Promise<{ id: string
     };
     if (mode === "add") {
       const { id: _id, ...payloadWithoutId } = payload;
-      const res = await fetch("http://localhost:8080/api/medical-records", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payloadWithoutId) });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/medical-records`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payloadWithoutId) });
       const created = await res.json();
       setMedicalRecords((prev) => [...prev, created]);
     } else {
-      await fetch(`http://localhost:8080/api/medical-records/${data.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/medical-records/${data.id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
       setMedicalRecords((prev) => prev.map((x) => x.id === data.id ? { ...payload, id: data.id } as MedicalRecord : x));
     }
     setRecordModal(null);
@@ -224,7 +224,7 @@ export default function PetDetailPage({ params }: { params: Promise<{ id: string
         ? `${pmBirthYear}-${pmBirthMonth.padStart(2, "0")}-${pmBirthDay.padStart(2, "0")}`
         : petModal.birthday ?? null,
     };
-    await fetch(`http://localhost:8080/api/pets/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pets/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
     setPet(payload as Pet);
     setPetModal(null);
   };
@@ -261,7 +261,7 @@ export default function PetDetailPage({ params }: { params: Promise<{ id: string
       const res = await fetch(`https://api.cloudinary.com/v1_1/dqsvcfydo/image/upload`, { method: "POST", body: formData });
       const data = await res.json();
       const photoUrl = data.secure_url;
-      await fetch(`http://localhost:8080/api/pets/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...pet, photoUrl }) });
+      await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pets/${id}`, { method: "PUT", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...pet, photoUrl }) });
       setPet((prev) => prev ? { ...prev, photoUrl } : prev);
       setCropModal(null);
     }, "image/jpeg");
@@ -380,7 +380,7 @@ export default function PetDetailPage({ params }: { params: Promise<{ id: string
                   </div>
                   <div style={{ display: "flex", gap: "0.75rem" }}>
                     <button onClick={() => openVaccineModal("edit", { ...v })} style={{ color: "#65a876", fontSize: "0.8rem", background: "none", border: "none", cursor: "pointer" }}>{t.edit}</button>
-                    <button onClick={async () => { if (!confirm(t.confirmDelete)) return; await fetch(`http://localhost:8080/api/vaccines/${v.id}`, { method: "DELETE" }); setVaccines((prev) => prev.filter((x) => x.id !== v.id)); }} style={{ color: "#f87171", fontSize: "0.8rem", background: "none", border: "none", cursor: "pointer" }}>{t.delete}</button>
+                    <button onClick={async () => { if (!confirm(t.confirmDelete)) return; await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/vaccines/${v.id}`, { method: "DELETE" }); setVaccines((prev) => prev.filter((x) => x.id !== v.id)); }} style={{ color: "#f87171", fontSize: "0.8rem", background: "none", border: "none", cursor: "pointer" }}>{t.delete}</button>
                   </div>
                 </div>
               ))
@@ -405,7 +405,7 @@ export default function PetDetailPage({ params }: { params: Promise<{ id: string
                     </div>
                     <div style={{ display: "flex", gap: "0.75rem" }}>
                       <button onClick={() => openRecordModal("edit", { ...r })} style={{ color: "#65a876", fontSize: "0.8rem", background: "none", border: "none", cursor: "pointer" }}>{t.edit}</button>
-                      <button onClick={async () => { if (!confirm(t.confirmDelete)) return; await fetch(`http://localhost:8080/api/medical-records/${r.id}`, { method: "DELETE" }); setMedicalRecords((prev) => prev.filter((x) => x.id !== r.id)); }} style={{ color: "#f87171", fontSize: "0.8rem", background: "none", border: "none", cursor: "pointer" }}>{t.delete}</button>
+                      <button onClick={async () => { if (!confirm(t.confirmDelete)) return; await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/medical-records/${r.id}`, { method: "DELETE" }); setMedicalRecords((prev) => prev.filter((x) => x.id !== r.id)); }} style={{ color: "#f87171", fontSize: "0.8rem", background: "none", border: "none", cursor: "pointer" }}>{t.delete}</button>
                     </div>
                   </div>
                   {expandedRecord === r.id && (

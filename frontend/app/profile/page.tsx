@@ -49,7 +49,7 @@ export default function ProfilePage() {
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     if (!userId) { router.push("/login"); return; }
-    fetch(`http://localhost:8080/api/users/${userId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         setName(data.name || "");
@@ -61,7 +61,7 @@ export default function ProfilePage() {
   const handleSaveInfo = async () => {
     setInfoMsg(""); setInfoErr("");
     const userId = localStorage.getItem("userId");
-    const res = await fetch(`http://localhost:8080/api/users/${userId}`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, phone }),
@@ -77,7 +77,7 @@ export default function ProfilePage() {
     if (newPw !== confirmPw) { setConfirmPwErr(t.passwordMismatch); return; }
 
     const userId = localStorage.getItem("userId");
-    const res = await fetch(`http://localhost:8080/api/users/${userId}/password`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${userId}/password`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ currentPassword: currentPw, newPassword: newPw }),

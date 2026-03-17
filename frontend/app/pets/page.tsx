@@ -38,14 +38,14 @@ export default function PetsPage() {
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
-    fetch(`http://localhost:8080/api/pets/owner/${userId}`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pets/owner/${userId}`)
       .then((res) => res.json())
       .then((data) => setPets(Array.isArray(data) ? data : []));
   }, []);
 
   const handleDelete = async (pet: Pet) => {
     if (!confirm(`確定要刪除「${pet.name}」嗎？此操作無法復原。`)) return;
-    await fetch(`http://localhost:8080/api/pets/${pet.id}`, { method: "DELETE" });
+    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/pets/${pet.id}`, { method: "DELETE" });
     setPets((prev) => prev.filter((p) => p.id !== pet.id));
   };
 
