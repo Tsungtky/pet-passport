@@ -18,6 +18,7 @@ type Pet = {
   bloodType: string;
   chipNumber: string;
   qrCode: string;
+  photoUrl?: string;
 };
 
 type Vaccine = {
